@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhyan Jadhao | UI/UX Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --card: #16161f;
+    --border: rgba(255,255,255,0.07);
+    --accent: #c8ff00;
+    --accent2: #7b61ff;
+    --text: #f0f0f0;
+    --muted: #6b6b80;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .blob-1 { width: 500px; height: 500px; background: rgba(123,97,255,0.12); top: -150px; left: -100px; }
+  .blob-2 { width: 400px; height: 400px; background: rgba(200,255,0,0.07); bottom: 10%; right: -100px; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 60px;
+    backdrop-filter: blur(20px);
+    background: rgba(10,10,15,0.75);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-tag {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 140px 60px 120px;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+  }
+  h1 .line2 { color: var(--muted); }
+
+  .hero-desc {
+    max-width: 500px;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: #9090aa;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  .hero-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 64px;
+  }
+  .chip {
+    padding: 8px 18px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    background: var(--card);
+    letter-spacing: 0.04em;
+  }
+  .chip.accent {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(200,255,0,0.06);
+  }
+
+  /* SCROLL BUTTON */
+  .scroll-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: border-color 0.25s, color 0.25s, background 0.25s;
+    width: fit-content;
+  }
+  .scroll-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(200,255,0,0.05);
+  }
+  .scroll-btn .arrow-wrap {
+    display: flex;
+    align-items: center;
+    animation: bounce 1.8s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+  /* SECTION */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 80px 60px 80px;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 60px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 24px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .section-count {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    color: var(--accent);
+  }
+
+  /* PROJECT GRID */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  /* PROJECT CARD — hidden until JS reveals with scroll animation */
+  .project-card {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  .project-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .project-card:nth-child(1) { transition-delay: 0.05s; }
+  .project-card:nth-child(2) { transition-delay: 0.15s; }
+  .project-card:nth-child(3) { transition-delay: 0.25s; }
+
+  .project-card:hover {
+    border-color: rgba(200,255,0,0.35);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .project-card:hover .card-thumb-placeholder { transform: scale(1.04); }
+  .project-card:hover .card-arrow { opacity: 1; transform: translate(0, 0); }
+  .project-card:hover .card-overlay { opacity: 1; }
+
+  .card-thumb-wrap {
+    width: 100%;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    position: relative;
+  }
+  .card-thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .p1 .card-thumb-placeholder { background: linear-gradient(135deg, #1a1028, #2d1b4e); }
+  .p2 .card-thumb-placeholder { background: linear-gradient(135deg, #1c1010, #3d1a1a); }
+  .p3 .card-thumb-placeholder { background: linear-gradient(135deg, #101a18, #1a3d38); }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .card-body { padding: 22px 24px 20px; }
+  .card-category {
+    font-size: 0.67rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.25;
+  }
+  .card-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+  }
+  .card-tag {
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+  .card-arrow {
+    width: 34px; height: 34px;
+    border: 1px solid rgba(200,255,0,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    opacity: 0;
+    transform: translate(-6px, 6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    font-size: 1rem;
+  }
+
+  /* WIP BANNER */
+  .wip-banner {
+    position: relative;
+    z-index: 1;
+    margin: 0 60px 80px;
+    padding: 40px 52px;
+    background: linear-gradient(135deg, rgba(123,97,255,0.08), rgba(200,255,0,0.05));
+    border: 1px solid rgba(200,255,0,0.12);
+    border-radius: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1);
+  }
+  .wip-banner.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .wip-icon {
+    font-size: 2.2rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .wip-text h3 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .wip-text p {
+    font-size: 0.92rem;
+    color: #8888a0;
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 580px;
+  }
+  .wip-text p strong {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    position: relative;
+    z-index: 1;
+    margin: 0 60px 80px;
+    padding: 44px 52px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease 0.1s, transform 0.6s cubic-bezier(0.22,1,0.36,1) 0.1s;
+  }
+  .about-strip.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .about-avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: #0a0a0f;
+    flex-shrink: 0;
+  }
+  .about-text h2 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .about-text p {
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .about-links {
+    margin-left: auto;
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .about-link {
+    padding: 10px 22px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: all 0.25s ease;
+  }
+  .about-link.primary {
+    background: var(--accent);
+    color: #0a0a0f;
+  }
+  .about-link.primary:hover { background: #d4ff33; }
+  .about-link.ghost {
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .about-link.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 36px 60px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .hero { padding: 120px 24px 80px; }
+    section { padding: 60px 24px 60px; }
+    .wip-banner { margin: 0 24px 48px; padding: 28px 24px; flex-wrap: wrap; gap: 16px; }
+    .about-strip { margin: 0 24px 60px; padding: 28px 24px; flex-wrap: wrap; gap: 20px; }
+    .about-links { margin-left: 0; flex-wrap: wrap; }
+    .projects-grid { grid-template-columns: 1fr; gap: 16px; }
+    footer { padding: 28px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">DJ<span>.</span></div>
+  <div class="nav-tag">UI/UX Portfolio</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>
+    Dhyan<br>
+    <span class="line2">Jadhao</span>
+  </h1>
+  <p class="hero-desc">
+    IT Engineering student building intuitive digital experiences.
+    Passionate about clean interfaces, user-centred thinking, and turning ideas into polished Figma prototypes.
+  </p>
+  <div class="hero-chips">
+    <span class="chip accent">UI/UX Design</span>
+    <span class="chip">Figma</span>
+    <span class="chip">Prototyping</span>
+    <span class="chip">User Research</span>
+  </div>
+
+  <button class="scroll-btn" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">
+    View my projects
+    <span class="arrow-wrap">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M7 1v12M1 7l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </button>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header">
+    <span class="section-title">Selected Projects</span>
+    <span class="section-count">03</span>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- IRCTC -->
+    <a class="project-card p1" href="https://www.figma.com/proto/h9Vyg2AeLi08u80lBARTLN/Untitled?node-id=1-2&starting-point-node-id=1%3A2&t=rSfTK1mXtRPZc7AS-1" target="_blank" rel="noopener">
+      <div class="card-thumb-wrap">
+        <div class="card-thumb-placeholder">🚆</div>
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Redesign · Web</div>
+        <div class="card-title">IRCTC Homepage Redesign</div>
+        <div class="card-desc">A modernised take on India's national rail booking platform — cleaner layout, improved hierarchy, and a frictionless booking flow.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-tag">Figma Prototype</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <!-- BEAUTY -->
+    <a class="project-card p2" href="https://www.figma.com/design/6qeMxNJdAqv765UKOuYA65/Beauty-E--commerce-landing-Page?node-id=0-1&t=lUA7MSXoFdSviWjC-1" target="_blank" rel="noopener">
+      <div class="card-thumb-wrap">
+        <div class="card-thumb-placeholder">💄</div>
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">E-commerce · Landing Page</div>
+        <div class="card-title">Beauty E-commerce Homepage</div>
+        <div class="card-desc">An elegant landing page for a beauty brand — rich visuals, product spotlights, and a luxury feel that converts browsers into buyers.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-tag">Figma Design</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <!-- DONUT -->
+    <a class="project-card p3" href="https://www.figma.com/proto/WyuZLGmy3WdkRkEoZCEvTC/Donut-Brand-UI-and-Prototype-concept?node-id=6-3&scaling=scale-down&t=R3qKIJuEIrzHowaI-1" target="_blank" rel="noopener">
+      <div class="card-thumb-wrap">
+        <div class="card-thumb-placeholder">🍩</div>
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Brand UI · Prototype</div>
+        <div class="card-title">Donut Brand Landing Page</div>
+        <div class="card-desc">A playful yet polished brand concept for a donut shop — bold typography, vibrant colours, and a fully interactive prototype experience.</div>
+      </div>
+      <div class="card-footer">
+        <span class="card-tag">Figma Prototype</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- WIP BANNER -->
+<div class="wip-banner" id="wip">
+  <div class="wip-icon">🛠️</div>
+  <div class="wip-text">
+    <h3>More projects on the way</h3>
+    <p>
+      I'm actively expanding my skills and working on new design challenges every week.
+      These three projects represent my foundation — and I'm just getting started.
+      <br><br>
+      I'm eager to <strong>join a team where I can learn from experienced designers</strong>, contribute meaningfully, and grow fast.
+      If you're looking for a motivated, detail-driven designer who is hungry to improve —
+      <strong>I'd love to be part of your journey</strong>.
+    </p>
+  </div>
+</div>
+
+<!-- ABOUT STRIP -->
+<div class="about-strip" id="about">
+  <div class="about-avatar">DJ</div>
+  <div class="about-text">
+    <h2>Dhyan Jadhao</h2>
+    <p>IT Engineering Student · UI/UX Designer · Open to internships & opportunities</p>
+  </div>
+  <div class="about-links">
+    <a class="about-link ghost" href="mailto:dhyandsj@gmail.com">✉ Email</a>
+    <a class="about-link primary" href="https://www.linkedin.com/in/dhyan-jadhao-577145209/" target="_blank" rel="noopener">LinkedIn ↗</a>
+  </div>
+</div>
+
+<footer>
+  © 2026 Dhyan Jadhao &nbsp;·&nbsp; All projects open in Figma
+</footer>
+
+<script>
+  // Intersection Observer — reveal cards when scrolled into view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.project-card, .wip-banner, .about-strip')
+    .forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
